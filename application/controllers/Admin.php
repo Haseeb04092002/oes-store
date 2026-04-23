@@ -69,7 +69,7 @@ class Admin extends CI_Controller
 
     public function index() {
         // Standard Admin Auth Check
-        if (!$this->session->userdata('admin_logged')) redirect('admin/login');
+        // if (!$this->session->userdata('admin_logged')) redirect('admin/login');
 
         $this->load->model('Admin_model');
         
