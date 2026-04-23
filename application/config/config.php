@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/oes-store/';
-// $config['base_url'] = 'https://oxbridgeeducationalservices.com/';
+// $config['base_url'] = 'http://localhost/oes-store/';
+$config['base_url'] = 'https://store.oxbridgeeducationalservices.com/';
 
 /*
 |--------------------------------------------------------------------------
