@@ -61,10 +61,25 @@ class Admin extends CI_Controller
         $this->load->view('admin/layout/footer', $data);
     }
 
-    public function index()
-    {
-        $data['title'] = "Dashboard Analytics";
-        $this->render('dashboard', $data);
+    // public function index()
+    // {
+    //     $data['title'] = "Dashboard Analytics";
+    //     $this->render('dashboard', $data);
+    // }
+
+    public function index() {
+        // Standard Admin Auth Check
+        if (!$this->session->userdata('admin_logged')) redirect('admin/login');
+
+        $this->load->model('Admin_model');
+        
+        $data['stats'] = $this->Admin_model->get_dashboard_stats();
+        $data['chart_data'] = $this->Admin_model->get_sales_chart_data();
+        
+        $data['title'] = "Admin Dashboard";
+        $this->load->view('admin/layout/header', $data);
+        $this->load->view('admin/dashboard', $data);
+        $this->load->view('admin/layout/footer');
     }
 
     // public function products()
