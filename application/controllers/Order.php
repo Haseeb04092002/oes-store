@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+
 class Order extends CI_Controller
 {
 
@@ -100,9 +102,40 @@ class Order extends CI_Controller
 
     public function generate_pdf($order_id)
     {
-        // Load a library like Dompdf or TCPDF here
-        // For now, let's assume you have a simple printable view
-        $data['order'] = $this->Order_model->get_order_details($order_id);
-        $this->load->view('customer/order_pdf_view', $data);
+        // 1. Load the Order Data
+        $this->load->model('Order_model');
+        $order = $this->Order_model->get_order_details($order_id);
+        $items = $this->Order_model->get_order_items($order_id);
+
+        if (!$order) {
+            $this->session->set_flashdata('error', 'Order record not found.');
+            redirect('main/index');
+        }
+
+        // 2. Manually include Dompdf from third_party
+        // Note: Ensure the path to autoload.inc.php matches your folder structure exactly
+        require_once APPPATH . 'third_party/dompdf/autoload.inc.php';
+
+        // 3. Setup Dompdf Options
+        $options = new Dompdf\Options();
+        $options->set('isRemoteEnabled', true); // Essential for loading your logo or CSS images
+        $options->set('defaultFont', 'Helvetica');
+
+        $dompdf = new Dompdf\Dompdf($options);
+
+        // 4. Load the view as a string (the 3rd parameter 'true' is key)
+        $data = [
+            'order' => $order,
+            'items' => $items
+        ];
+        $html = $this->load->view('customer/order_pdf_view', $data, true);
+
+        // 5. Generate and Stream the PDF
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Forces a download in the browser
+        $dompdf->stream("Invoice-OES-{$order_id}.pdf", array("Attachment" => 1));
     }
 }
