@@ -55,6 +55,32 @@ class Auth extends CI_Controller
         }
     }
 
+    protected function render($view_path, $data = [])
+    {
+        // 1. Load the Header (Standard for all pages)
+        $this->load->view('layout/header', $data);
+
+        // 2. Load the specific page content
+        // Note: $view_path will be something like 'customer/checkout_step1'
+        $this->load->view($view_path, $data);
+
+        // 3. Load the Footer (Standard for all pages)
+        $this->load->view('layout/footer', $data);
+    }
+
+    public function login()
+    {
+        // If already logged in, don't show the login page
+        if ($this->session->userdata('cus_logged')) {
+            redirect('main/account');
+        }
+
+        $data['title'] = "Sign In | Oxbridge Store";
+
+        // Using your custom render function
+        $this->render('customer/login', $data);
+    }
+
     /**
      * REGISTRATION PROCESS
      */
