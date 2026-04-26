@@ -12,6 +12,31 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
     }
 
+    public function phone_login_process()
+    {
+        $phone = $this->input->post('phone');
+
+        // 1. Check if user exists
+        $user = $this->db->get_where('customers', ['phone' => $phone])->row_array();
+
+        if ($user) {
+            // 2. Set Session
+            $session_data = [
+                'cus_id'     => $user['id'],
+                'cus_name'   => $user['full_name'],
+                'cus_logged' => TRUE
+            ];
+            $this->session->set_userdata($session_data);
+
+            $this->session->set_flashdata('success', 'Welcome back, ' . $user['full_name'] . '!');
+            redirect('main/account');
+        } else {
+            // 3. Handle Non-existent User
+            $this->session->set_flashdata('error', 'No account found with this number. Please place an order to register!');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
     public function phone_login()
     {
         $phone = $this->input->post('phone');
