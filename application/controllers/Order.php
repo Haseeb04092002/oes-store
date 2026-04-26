@@ -1,16 +1,19 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Order extends CI_Controller {
+class Order extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         if (!$this->session->userdata('cus_logged')) redirect('main/login');
         $this->load->model('Order_model');
         $this->load->library('cart');
     }
 
-    public function place() {
+    public function place()
+    {
         // 1. Validate Cart
         if (!$this->cart->contents()) {
             $this->session->set_flashdata('error', 'Your cart is empty.');
@@ -50,14 +53,56 @@ class Order extends CI_Controller {
         }
     }
 
-    public function success() {
+    public function success()
+    {
         if (!$this->session->flashdata('order_id')) redirect('main/index');
-        
+
         $data['title'] = "Order Success | OES";
         $data['order_id'] = $this->session->flashdata('order_id');
-        
+
         $this->load->view('layout/header', $data);
         $this->load->view('customer/order_success', $data);
         $this->load->view('layout/footer');
+    }
+
+    public function place_with_receipt()
+    {
+        // 1. Upload the Receipt Image
+        $config['upload_path']   = './uploads/receipts/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['encrypt_name']  = TRUE;
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('receipt_image')) {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect('checkout/payment');
+        }
+
+        $upload_data = $this->upload->data();
+
+        // 2. Save Order to DB
+        $order_data = [
+            'customer_id'    => $this->session->userdata('cus_id'),
+            'total_amount'   => $this->cart->total(),
+            'payment_method' => $this->input->post('payment_method'),
+            'receipt_path'   => $upload_data['file_name'],
+            'order_status'   => 'pending'
+        ];
+
+        $order_id = $this->Order_model->save_full_order($order_data, $this->cart->contents());
+
+        if ($order_id) {
+            $this->cart->destroy();
+            // Redirect to a method that generates PDF
+            redirect('order/generate_pdf/' . $order_id);
+        }
+    }
+
+    public function generate_pdf($order_id)
+    {
+        // Load a library like Dompdf or TCPDF here
+        // For now, let's assume you have a simple printable view
+        $data['order'] = $this->Order_model->get_order_details($order_id);
+        $this->load->view('customer/order_pdf_view', $data);
     }
 }

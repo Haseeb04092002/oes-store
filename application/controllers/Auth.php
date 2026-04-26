@@ -1,19 +1,40 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         // Load Model, Library, and Helper
         $this->load->model('Auth_model');
         $this->load->library('form_validation');
     }
 
+    public function phone_login()
+    {
+        $phone = $this->input->post('phone');
+        $user = $this->db->get_where('customers', ['phone' => $phone])->row_array();
+
+        if ($user) {
+            $this->session->set_userdata([
+                'cus_id'     => $user['id'],
+                'cus_name'   => $user['full_name'],
+                'cus_logged' => TRUE
+            ]);
+            redirect('main/account');
+        } else {
+            $this->session->set_flashdata('error', 'Account not found with this phone number.');
+            redirect('main/login');
+        }
+    }
+
     /**
      * REGISTRATION PROCESS
      */
-    public function register_process() {
+    public function register_process()
+    {
         $this->form_validation->set_rules('full_name', 'Full Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[customers.email]');
         $this->form_validation->set_rules('phone', 'Phone Number', 'required|trim');
@@ -43,7 +64,8 @@ class Auth extends CI_Controller {
     /**
      * LOGIN PROCESS
      */
-    public function login_process() {
+    public function login_process()
+    {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -81,11 +103,12 @@ class Auth extends CI_Controller {
     /**
      * ACCOUNT SETTINGS UPDATE
      */
-    public function update_profile() {
+    public function update_profile()
+    {
         if (!$this->session->userdata('cus_logged')) redirect('main/login');
 
         $customer_id = $this->session->userdata('cus_id');
-        
+
         $data = [
             'full_name' => $this->input->post('full_name'),
             'phone'     => $this->input->post('phone'),
@@ -93,7 +116,7 @@ class Auth extends CI_Controller {
         ];
 
         // If user wants to change password
-        if($this->input->post('new_password')) {
+        if ($this->input->post('new_password')) {
             $data['password'] = password_hash($this->input->post('new_password'), PASSWORD_BCRYPT);
         }
 
@@ -106,7 +129,8 @@ class Auth extends CI_Controller {
         redirect('main/account/settings');
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->session->unset_userdata(['cus_id', 'cus_name', 'cus_logged']);
         $this->session->set_flashdata('success', 'You have been logged out.');
         redirect('main/index');

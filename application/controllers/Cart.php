@@ -1,13 +1,36 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Cart extends CI_Controller {
+class Cart extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         // Ensure the cart library and models are loaded
         $this->load->library('cart');
         $this->load->model('Product_model');
+    }
+
+    public function add($id)
+    {
+        // REMOVED: The login check is gone. Anyone can add to cart now.
+        $product = $this->Product_model->get_product($id);
+        $media = $this->Product_model->get_media($id);
+        $image = (!empty($media)) ? $media[0]['file_path'] : 'assets/images/default.jpg';
+
+        if ($product) {
+            $data = array(
+                'id'      => $product['id'],
+                'qty'     => 1,
+                'price'   => $product['discounted_price'],
+                'name'    => $product['title'],
+                'options' => array('image' => $image)
+            );
+            $this->cart->insert($data);
+            $this->session->set_flashdata('success', 'Added to cart!');
+        }
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     // public function buy_now($id) {
@@ -20,7 +43,7 @@ class Cart extends CI_Controller {
     //     // 2. Fetch Product & Media (For the thumbnail in checkout)
     //     $product = $this->Product_model->get_product($id);
     //     $media = $this->Product_model->get_media($id);
-        
+
     //     // Default image if gallery is empty
     //     $image = (!empty($media)) ? $media[0]['file_path'] : 'assets/images/default.jpg';
 
@@ -55,20 +78,23 @@ class Cart extends CI_Controller {
     // }
 
     // Remove specific item using Row ID
-    public function remove($rowid) {
+    public function remove($rowid)
+    {
         $this->cart->remove($rowid);
         $this->session->set_flashdata('success', 'Item removed from cart.');
         redirect('main/checkout');
     }
 
     // Clear entire cart
-    public function destroy() {
+    public function destroy()
+    {
         $this->cart->destroy();
         redirect('main/index');
     }
 
 
-    public function buy_now($id) {
+    public function buy_now($id)
+    {
         // Re-use your existing add logic but redirect to checkout instead
         $product = $this->Product_model->get_product($id);
         $media = $this->Product_model->get_media($id);
