@@ -68,8 +68,9 @@
 </head>
 
 <body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
         <div class="container">
