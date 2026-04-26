@@ -46,21 +46,52 @@
             ]
         });
 
-        // 3. Analytics Chart
+        // // 3. Analytics Chart
+        // const ctx = document.getElementById('salesChart');
+        // if (ctx) {
+        //     new Chart(ctx, {
+        //         type: 'line',
+        //         data: {
+        //             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        //             datasets: [{
+        //                 label: 'Sales (PKR)',
+        //                 data: [12000, 19000, 3000, 5000, 2000, 30000],
+        //                 borderColor: '#0056b3',
+        //                 tension: 0.4,
+        //                 fill: true,
+        //                 backgroundColor: 'rgba(0, 86, 179, 0.1)'
+        //             }]
+        //         }
+        //     });
+        // }
+
+        // Prepare Data for JS
+        const chartLabels = <?= json_encode(array_column($chart_data, 'month')) ?>;
+        const chartValues = <?= json_encode(array_column($chart_data, 'total')) ?>;
+
         const ctx = document.getElementById('salesChart');
         if (ctx) {
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    labels: chartLabels.length ? chartLabels : ['No Data'],
                     datasets: [{
-                        label: 'Sales (PKR)',
-                        data: [12000, 19000, 3000, 5000, 2000, 30000],
+                        label: 'Monthly Sales (PKR)',
+                        data: chartValues.length ? chartValues : [0],
                         borderColor: '#0056b3',
-                        tension: 0.4,
+                        backgroundColor: 'rgba(0, 86, 179, 0.1)',
+                        borderWidth: 3,
                         fill: true,
-                        backgroundColor: 'rgba(0, 86, 179, 0.1)'
+                        tension: 0.4
                     }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
                 }
             });
         }
