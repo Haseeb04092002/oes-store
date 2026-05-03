@@ -34,18 +34,7 @@ class Main extends CI_Controller
 
     public function checkout()
     {
-        // 1. Check if the customer is logged in (using the key from your Auth controller)
-        if (!$this->session->userdata('cus_logged')) {
-
-            // 2. Set the redirect flag so Auth.php/login_process knows to send them back here
-            $this->session->set_userdata('redirect_to_checkout', TRUE);
-
-            // 3. Set a message for the user
-            $this->session->set_flashdata('error', 'Please sign in to complete your order.');
-
-            // 4. Redirect to the login page
-            redirect('main/login');
-        }
+        // Removed login check to allow guest checkout
 
         // 5. If logged in, check if the cart is empty
         // (Assuming you are using the native CodeIgniter Cart Library)

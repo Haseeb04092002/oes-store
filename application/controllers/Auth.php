@@ -87,9 +87,7 @@ class Auth extends CI_Controller
     public function register_process()
     {
         $this->form_validation->set_rules('full_name', 'Full Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[customers.email]');
         $this->form_validation->set_rules('phone', 'Phone Number', 'required|trim');
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', validation_errors());
@@ -97,13 +95,11 @@ class Auth extends CI_Controller
         } else {
             $data = [
                 'full_name' => $this->input->post('full_name'),
-                'email'     => $this->input->post('email'),
-                'phone'     => $this->input->post('phone'),
-                'password'  => password_hash($this->input->post('password'), PASSWORD_BCRYPT)
+                'phone'     => $this->input->post('phone')
             ];
 
             if ($this->Auth_model->register_user($data)) {
-                $this->session->set_flashdata('success', 'Account created! Welcome to Oxbridge.');
+                $this->session->set_flashdata('success', 'Account created! Welcome to Oxbridge. Please log in with your phone number.');
                 redirect('main/login');
             } else {
                 $this->session->set_flashdata('error', 'Database error. Please try again.');

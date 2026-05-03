@@ -106,15 +106,9 @@
                     </div>
                     <div class="col-md-6 mt-3 mt-md-0">
                         <div class="col-md-12 mt-3 mt-md-0">
-                            <?php if (!$this->session->userdata('cus_logged')): ?>
-                                <a href="<?= base_url('main/login'); ?>" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow">
-                                    <i class="bi bi-cart-plus-fill me-2"></i> Add to Cart
-                                </a>
-                            <?php else: ?>
-                                <a href="<?= base_url('cart/add/' . $product['id']); ?>" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow">
-                                    <i class="bi bi-cart-plus-fill me-2"></i> Add to Cart
-                                </a>
-                            <?php endif; ?>
+                            <a href="<?= base_url('cart/add/' . $product['id']); ?>" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow">
+                                <i class="bi bi-cart-plus-fill me-2"></i> Add to Cart
+                            </a>
                         </div>
                     </div>
                 </div>

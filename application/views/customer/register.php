@@ -20,24 +20,9 @@
                                 <input type="text" name="full_name" class="form-control rounded-pill px-4 bg-light border-0" required placeholder="John Doe">
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Email Address</label>
-                                <input type="email" name="email" class="form-control rounded-pill px-4 bg-light border-0" required placeholder="john@example.com">
-                            </div>
-
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label small fw-bold">Phone Number</label>
                                 <input type="tel" name="phone" class="form-control rounded-pill px-4 bg-light border-0" required placeholder="03XXXXXXXXX">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Password</label>
-                                <input type="password" name="password" id="password" class="form-control rounded-pill px-4 bg-light border-0" required minlength="6" placeholder="••••••••">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Confirm Password</label>
-                                <input type="password" class="form-control rounded-pill px-4 bg-light border-0" required data-parsley-equalto="#password" placeholder="••••••••">
                             </div>
                         </div>
 

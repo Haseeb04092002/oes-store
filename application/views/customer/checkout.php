@@ -5,43 +5,61 @@
             <div class="card border-0 shadow-sm rounded-4 p-4">
                 <h4 class="fw-bold mb-4">Shipping Information</h4>
                 
-                <form action="<?= base_url('order/place'); ?>" method="POST" id="checkoutForm" data-parsley-validate>
+                <form action="<?= base_url('order/submit_order'); ?>" method="POST" id="checkoutForm" enctype="multipart/form-data" data-parsley-validate>
                     <div class="row g-3">
                         <div class="col-md-12">
-                            <label class="form-label small fw-bold">Full Name</label>
-                            <input type="text" class="form-control bg-light border-0 px-3 py-2 rounded-3" 
-                                   value="<?= $this->session->userdata('cus_name'); ?>" readonly>
+                            <label class="form-label small fw-bold text-primary">Full Name</label>
+                            <input type="text" name="full_name" class="form-control bg-light border-0 px-3 py-2 rounded-3" 
+                                   value="<?= $this->session->userdata('cus_name'); ?>" required placeholder="e.g. John Doe">
                         </div>
 
-                        <div class="col-md-12">
-                            <label class="form-label small fw-bold text-primary">Contact Number (For Delivery)</label>
-                            <input type="tel" name="shipping_phone" class="form-control border-0 bg-light px-3 py-2 rounded-3" 
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-primary">Contact Number</label>
+                            <input type="tel" name="phone" class="form-control border-0 bg-light px-3 py-2 rounded-3" 
                                    required placeholder="e.g. 03001234567">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-primary">City</label>
+                            <input type="text" name="city" class="form-control border-0 bg-light px-3 py-2 rounded-3" 
+                                   required placeholder="e.g. Lahore">
                         </div>
 
                         <div class="col-12">
                             <label class="form-label small fw-bold text-primary">Complete Shipping Address</label>
                             <textarea name="address" class="form-control border-0 bg-light px-3 py-2 rounded-3" 
-                                      rows="3" required placeholder="House #, Street, Area, City..."></textarea>
+                                      rows="2" required placeholder="House #, Street, Area, City..."></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label small fw-bold text-primary">Postal Code</label>
+                            <input type="text" name="post_code" class="form-control border-0 bg-light px-3 py-2 rounded-3" 
+                                   required placeholder="e.g. 54000">
                         </div>
 
                         <div class="col-12 mt-4">
                             <h5 class="fw-bold mb-3">Select Payment Method</h5>
                             
                             <div class="form-check border p-3 rounded-4 mb-3" style="cursor: pointer;">
-                                <input class="form-check-input ms-0 me-2" type="radio" name="payment" id="cod" value="COD" checked>
-                                <label class="form-check-label fw-bold d-block" for="cod">
-                                    <i class="bi bi-truck me-2"></i> Cash on Delivery
-                                    <small class="d-block text-muted fw-normal">Pay when you receive the books at your doorstep.</small>
+                                <input class="form-check-input ms-0 me-2" type="radio" name="payment" id="easypaisa" value="Easypaisa" checked>
+                                <label class="form-check-label fw-bold d-block" for="easypaisa">
+                                    <i class="bi bi-phone me-2"></i> Easypaisa / JazzCash
+                                    <small class="d-block text-muted fw-normal">Transfer to our Mobile Account.</small>
                                 </label>
                             </div>
 
-                            <div class="form-check border p-3 rounded-4" style="cursor: pointer;">
-                                <input class="form-check-input ms-0 me-2" type="radio" name="payment" id="bank" value="Bank">
+                            <div class="form-check border p-3 rounded-4 mb-3" style="cursor: pointer;">
+                                <input class="form-check-input ms-0 me-2" type="radio" name="payment" id="bank" value="Bank Transfer">
                                 <label class="form-check-label fw-bold d-block" for="bank">
-                                    <i class="bi bi-bank me-2"></i> Bank Transfer / EasyPaisa / JazzCash
-                                    <small class="d-block text-muted fw-normal">Transfer to our account and share the receipt.</small>
+                                    <i class="bi bi-bank me-2"></i> Bank Transfer
+                                    <small class="d-block text-muted fw-normal">Transfer to our Bank Account.</small>
                                 </label>
+                            </div>
+
+                            <h5 class="fw-bold mt-4 mb-3">Upload Payment Receipt</h5>
+                            <div class="col-md-12">
+                                <input type="file" name="receipt_image" class="form-control border-0 bg-light px-3 py-2 rounded-3" required accept="image/*">
+                                <small class="text-muted mt-1 d-block">Please upload a screenshot of your successful transaction.</small>
                             </div>
                         </div>
                     </div>

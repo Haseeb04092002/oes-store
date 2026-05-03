@@ -9,12 +9,12 @@ class Order extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('cus_logged')) redirect('main/login');
+        // Removed global login check to allow guest checkout
         $this->load->model('Order_model');
         $this->load->library('cart');
     }
 
-    public function place()
+    public function submit_order()
     {
         // 1. Validate Cart
         if (!$this->cart->contents()) {
@@ -22,16 +22,65 @@ class Order extends CI_Controller
             redirect('main/products');
         }
 
-        // 2. Prepare Order Data
+        $phone = $this->input->post('phone');
+        $full_name = $this->input->post('full_name');
+        
+        // 2. Process Customer Information
+        $user = $this->db->get_where('customers', ['phone' => $phone])->row_array();
+
+        $customer_data = [
+            'full_name' => $full_name,
+            'phone'     => $phone,
+            'city'      => $this->input->post('city'),
+            'post_code' => $this->input->post('post_code'),
+            'address'   => $this->input->post('address')
+        ];
+
+        if ($user) {
+            $this->db->where('id', $user['id'])->update('customers', $customer_data);
+            $cus_id = $user['id'];
+        } else {
+            // New user registration without password required
+            $this->db->insert('customers', $customer_data);
+            $cus_id = $this->db->insert_id();
+        }
+
+        // Auto-login the user
+        $this->session->set_userdata([
+            'cus_id' => $cus_id,
+            'cus_name' => $full_name,
+            'cus_logged' => TRUE
+        ]);
+
+        // 3. Upload the Receipt Image
+        $config['upload_path']   = './uploads/receipts/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['encrypt_name']  = TRUE;
+        $this->load->library('upload', $config);
+
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0777, TRUE);
+        }
+
+        if (!$this->upload->do_upload('receipt_image')) {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect('main/checkout');
+        }
+
+        $upload_data = $this->upload->data();
+
+        // 4. Prepare Order Data
+        // Note: ensure your orders table has receipt_path column, or adjust accordingly.
         $order_data = [
-            'customer_id'    => $this->session->userdata('cus_id'),
+            'customer_id'    => $cus_id,
             'total_amount'   => $this->cart->total(),
             'payment_method' => $this->input->post('payment'),
+            'receipt_path'   => $upload_data['file_name'],
             'order_status'   => 'pending',
             'created_at'     => date('Y-m-d H:i:s')
         ];
 
-        // 3. Prepare Order Items Data
+        // 5. Prepare Order Items Data
         $items_data = [];
         foreach ($this->cart->contents() as $item) {
             $items_data[] = [
@@ -41,63 +90,30 @@ class Order extends CI_Controller
             ];
         }
 
-        // 4. Process via Model
+        // 6. Process via Model
         $order_id = $this->Order_model->create_order($order_data, $items_data);
 
         if ($order_id) {
             // Success: Clear Cart and show success page
             $this->cart->destroy();
             $this->session->set_flashdata('order_id', $order_id);
-            redirect('order/success');
+            redirect('order/success_review');
         } else {
             $this->session->set_flashdata('error', 'Failed to place order. Please contact support.');
             redirect('main/checkout');
         }
     }
 
-    public function success()
+    public function success_review()
     {
         if (!$this->session->flashdata('order_id')) redirect('main/index');
 
-        $data['title'] = "Order Success | OES";
+        $data['title'] = "Order Received | OES";
         $data['order_id'] = $this->session->flashdata('order_id');
 
         $this->load->view('layout/header', $data);
-        $this->load->view('customer/order_success', $data);
+        $this->load->view('customer/success_review', $data);
         $this->load->view('layout/footer');
-    }
-
-    public function place_with_receipt()
-    {
-        // 1. Upload the Receipt Image
-        $config['upload_path']   = './uploads/receipts/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $config['encrypt_name']  = TRUE;
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload('receipt_image')) {
-            $this->session->set_flashdata('error', $this->upload->display_errors());
-            redirect('checkout/payment');
-        }
-
-        $upload_data = $this->upload->data();
-
-        // 2. Save Order to DB
-        $order_data = [
-            'customer_id'    => $this->session->userdata('cus_id'),
-            'total_amount'   => $this->cart->total(),
-            'payment_method' => $this->input->post('payment_method'),
-            'receipt_path'   => $upload_data['file_name'],
-            'order_status'   => 'pending'
-        ];
-
-        $order_id = $this->Order_model->save_full_order($order_data, $this->cart->contents());
-
-        if ($order_id) {
-            $this->cart->destroy();
-            // Redirect to a method that generates PDF
-            redirect('order/generate_pdf/' . $order_id);
-        }
     }
 
     public function generate_pdf($order_id)
