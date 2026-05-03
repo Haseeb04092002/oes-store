@@ -2,6 +2,11 @@
     <div class="container text-center">
         <img src="<?= base_url('assets/images/oes-logo.png'); ?>" alt="Logo" style="filter: brightness(0) invert(1); height: 50px;" class="mb-4">
         <p class="text-white-50 mx-auto" style="max-width: 500px;">Official provider of Oxbridge Educational Services books and curriculum materials.</p>
+        <div class="mt-3">
+            <a href="<?= base_url('admin/login'); ?>" class="btn btn-outline-light rounded-pill px-4 btn-sm">
+                <i class="bi bi-lock-fill me-1"></i> Admin Login
+            </a>
+        </div>
         <hr class="my-4 opacity-25">
         <p class="small mb-0">&copy; 2026 Oxbridge Educational Services. Developed by [Your Name]</p>
     </div>

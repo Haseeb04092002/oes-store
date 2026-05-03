@@ -90,9 +90,7 @@
                 </ul>
 
                 <div class="d-lg-flex d-none">
-                    <a href="<?= base_url('admin/login'); ?>" class="btn btn-outline-primary rounded-pill px-3 me-2 border-0 shadow-sm">
-                        <i class="bi bi-lock-fill"></i> Admin
-                    </a>
+
                     <?php if (!$this->session->userdata('cus_logged')): ?>
                         <a href="<?= base_url('auth/login'); ?>" class="btn btn-outline-primary rounded-pill px-4 border-0 fw-bold">
                             <i class="bi bi-person me-1"></i> Sign In
