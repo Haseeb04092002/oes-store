@@ -104,6 +104,35 @@
                         </table>
                     </div>
 
+                <?php elseif($active_tab == 'reviews'): ?>
+                    <div class="row g-4">
+                        <?php if(!empty($reviews)): foreach($reviews as $r): ?>
+                            <div class="col-md-6">
+                                <div class="card border-0 bg-light rounded-4 p-3 h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h6 class="fw-bold mb-1"><a href="<?= base_url('main/product_detail/' . $r['product_id']); ?>" class="text-decoration-none text-dark"><?= $r['product_name'] ?></a></h6>
+                                            <div class="text-warning small">
+                                                <?php for($i=1; $i<=5; $i++): ?>
+                                                    <i class="bi bi-star<?= ($i <= $r['rating']) ? '-fill' : '' ?>"></i>
+                                                <?php endfor; ?>
+                                            </div>
+                                        </div>
+                                        <a href="<?= base_url('review/delete/' . $r['id']); ?>" class="btn btn-sm btn-outline-danger border-0" onclick="return confirm('Are you sure you want to delete this review?');"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                    <p class="small text-muted mb-0 flex-grow-1"><?= $r['comment'] ?></p>
+                                    <small class="text-muted mt-2 d-block" style="font-size: 0.7rem;">Posted on <?= date('d M, Y', strtotime($r['created_at'])) ?> &bull; <span class="badge bg-<?= ($r['status'] == 'approved') ? 'success' : 'warning' ?>"><?= ucfirst($r['status']) ?></span></small>
+                                </div>
+                            </div>
+                        <?php endforeach; else: ?>
+                            <div class="col-12 text-center py-5">
+                                <i class="bi bi-star text-muted fs-1 mb-3 d-block"></i>
+                                <p class="text-muted">You haven't reviewed any books yet.</p>
+                                <a href="<?= base_url('main/account/orders'); ?>" class="btn btn-primary rounded-pill btn-sm">Review Your Purchases</a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
                 <?php elseif($active_tab == 'settings'): ?>
                     <form action="<?= base_url('auth/update_profile'); ?>" method="POST">
                         <div class="row g-3">

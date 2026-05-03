@@ -105,10 +105,15 @@
                         </span>
                     </div>
                     <div class="col-md-6 mt-3 mt-md-0">
-                        <div class="col-md-12 mt-3 mt-md-0">
-                            <a href="<?= base_url('cart/add/' . $product['id']); ?>" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow">
+                        <div class="col-md-12 mt-3 mt-md-0 d-flex gap-2">
+                            <a href="<?= base_url('cart/add/' . $product['id']); ?>" class="btn btn-primary flex-grow-1 rounded-pill py-3 fw-bold shadow">
                                 <i class="bi bi-cart-plus-fill me-2"></i> Add to Cart
                             </a>
+                            <button type="button" class="btn btn-outline-danger rounded-circle shadow-sm wishlist-btn" 
+                                    onclick="toggleWishlist(<?= $product['id'] ?>, this)" 
+                                    style="width: 56px; height: 56px; flex-shrink: 0;">
+                                <i class="bi <?= (isset($is_wishlisted) && $is_wishlisted) ? 'bi-heart-fill' : 'bi-heart' ?> fs-4"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -249,6 +254,36 @@ function promptLogin() {
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = "<?= base_url('main/login'); ?>";
+        }
+    });
+}
+
+function toggleWishlist(id, element) {
+    <?php if(!$this->session->userdata('cus_logged')): ?>
+        promptLogin();
+        return;
+    <?php endif; ?>
+
+    const icon = element.querySelector('i');
+
+    $.ajax({
+        url: "<?= base_url('wishlist/toggle/') ?>" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(res) {
+            if(res.status === 'success') {
+                if(res.action === 'added') {
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
+                    if (typeof Toast !== 'undefined') Toast.fire({ icon: 'success', title: 'Added to wishlist' });
+                } else {
+                    icon.classList.remove('bi-heart-fill');
+                    icon.classList.add('bi-heart');
+                    if (typeof Toast !== 'undefined') Toast.fire({ icon: 'info', title: 'Removed from wishlist' });
+                }
+            } else {
+                window.location.href = "<?= base_url('main/login'); ?>";
+            }
         }
     });
 }

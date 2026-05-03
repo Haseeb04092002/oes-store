@@ -102,6 +102,12 @@ class Main extends CI_Controller
         $data['reviews'] = $this->Review_model->get_product_reviews($id);
         $data['avg_rating'] = $this->Review_model->get_avg_rating($id);
 
+        $data['is_wishlisted'] = false;
+        if($this->session->userdata('cus_logged')) {
+            $this->load->model('Wishlist_model');
+            $data['is_wishlisted'] = $this->Wishlist_model->is_in_wishlist($this->session->userdata('cus_id'), $id);
+        }
+
         if (!$data['product']) {
             show_404();
         }

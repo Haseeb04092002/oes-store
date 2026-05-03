@@ -25,4 +25,25 @@ class Review extends CI_Controller {
 
         redirect($_SERVER['HTTP_REFERER']);
     }
+
+    public function delete($id) {
+        if (!$this->session->userdata('cus_logged')) {
+            $this->session->set_flashdata('error', 'Please login first.');
+            redirect('main/login');
+        }
+
+        $customer_id = $this->session->userdata('cus_id');
+        
+        // Verify ownership before deleting
+        $review = $this->db->get_where('reviews', ['id' => $id, 'customer_id' => $customer_id])->row_array();
+        
+        if ($review) {
+            $this->db->delete('reviews', ['id' => $id]);
+            $this->session->set_flashdata('success', 'Review deleted successfully.');
+        } else {
+            $this->session->set_flashdata('error', 'Review not found or permission denied.');
+        }
+
+        redirect($_SERVER['HTTP_REFERER']);
+    }
 }
