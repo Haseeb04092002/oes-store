@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h6 class="fw-bold mb-1">Our Location</h6>
-                    <p class="text-muted mb-0">123 Education Plaza, Main Boulevard,<br>Lahore, Pakistan</p>
+                    <p class="text-muted mb-0">1st Floor, Talagang Hwy, above NADRA Office,<br>Chakwal, 48800, Pakistan</p>
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <h6 class="fw-bold mb-1">Phone Number</h6>
-                    <p class="text-muted mb-0">+92 300 1234567<br>+92 423 5556677</p>
+                    <p class="text-muted mb-0">+92 314 5310786<br>+92 303 8708733</p>
                 </div>
             </div>
 
@@ -45,10 +45,10 @@
 
             <h5 class="fw-bold mb-3">Follow Our Updates</h5>
             <div class="d-flex gap-3">
-                <a href="#" class="btn btn-outline-primary rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="btn btn-outline-danger rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="btn btn-outline-info rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="btn btn-outline-success rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-whatsapp"></i></a>
+                <a href="https://www.facebook.com/people/OES-Skills-Academy/61584560076635/" target="_blank" class="btn btn-outline-primary rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.youtube.com/@oxbridgeeducationalservices_pk" target="_blank" class="btn btn-outline-danger rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-youtube"></i></a>
+                <a href="https://www.tiktok.com/@oxbridge.oes?_r=1&_t=ZS-92ULlzRwMHS" target="_blank" class="btn btn-outline-info rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-tiktok"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=923145310786" target="_blank" class="btn btn-outline-success rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-whatsapp"></i></a>
             </div>
         </div>
 
@@ -100,7 +100,7 @@
 <div class="container-fluid p-0 mt-5">
     <div class="card border-0 rounded-0 shadow-sm overflow-hidden" style="height: 450px;">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108844.20452373756!2d74.24294472304958!3d31.513031024364426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc202c60d148b3d22!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1711200000000!5m2!1sen!2s"
+            src="https://maps.google.com/maps?q=Talagang%20Hwy,%20above%20NADRA%20Office,%20Chakwal,%20Pakistan&t=&z=15&ie=UTF8&iwloc=&output=embed"
             width="100%"
             height="100%"
             style="border:0;"

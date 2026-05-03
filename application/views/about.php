@@ -77,7 +77,7 @@
                     <div class="card-body p-4 text-center">
                         <h4 class="fw-bold">OES Skills Academy</h4>
                         <p class="text-muted">A dedicated wing focused on vocational training, digital literacy, and professional workshops for the youth.</p>
-                        <button class="btn btn-outline-danger rounded-pill px-4">Learn More</button>
+                        <a href="https://oxbridgeeducationalservices.com/" class="btn btn-outline-danger rounded-pill px-4">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -116,17 +116,18 @@
         <p class="lead text-white-50 mb-5">Follow us on social media for the latest updates on new arrivals and academic workshops.</p>
 
         <div class="d-flex justify-content-center gap-4 mb-5">
-            <a href="#" class="social-icon bg-primary text-white"><i class="bi bi-facebook fs-4"></i></a>
-            <a href="#" class="social-icon bg-danger text-white"><i class="bi bi-instagram fs-4"></i></a>
-            <a href="#" class="social-icon bg-info text-white"><i class="bi bi-twitter fs-4"></i></a>
-            <a href="#" class="social-icon bg-success text-white"><i class="bi bi-whatsapp fs-4"></i></a>
+            <a href="https://www.facebook.com/people/OES-Skills-Academy/61584560076635/" target="_blank" class="social-icon bg-primary text-white"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="https://www.youtube.com/@oxbridgeeducationalservices_pk" target="_blank" class="social-icon bg-danger text-white"><i class="bi bi-youtube fs-4"></i></a>
+            <a href="https://www.tiktok.com/@oxbridge.oes?_r=1&_t=ZS-92ULlzRwMHS" target="_blank" class="social-icon bg-info text-white"><i class="bi bi-tiktok fs-4"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=923145310786" target="_blank" class="social-icon bg-success text-white"><i class="bi bi-whatsapp fs-4"></i></a>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="bg-secondary bg-opacity-10 p-4 rounded-pill border border-secondary border-opacity-25">
-                    <span class="me-3"><i class="bi bi-envelope-fill text-warning me-2"></i> info@oxbridge.edu</span>
-                    <span><i class="bi bi-telephone-fill text-warning me-2"></i> +92 300 1234567</span>
+                    <span class="me-3"><i class="bi bi-geo-alt-fill text-warning me-2"></i> 1st Floor, Talagang Hwy, above NADRA Office, Chakwal, 48800, Pakistan</span>
+                    <span><i class="bi bi-telephone-fill text-warning me-2"></i> +92 314 5310786</span>
+                    <span><i class="bi bi-telephone-fill text-warning me-2"></i> +92 3038708733</span>
                 </div>
             </div>
         </div>
