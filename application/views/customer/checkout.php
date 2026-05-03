@@ -42,17 +42,24 @@
                             
                             <div class="form-check border p-3 rounded-4 mb-3" style="cursor: pointer;">
                                 <input class="form-check-input ms-0 me-2" type="radio" name="payment" id="easypaisa" value="Easypaisa" checked>
-                                <label class="form-check-label fw-bold d-block" for="easypaisa">
-                                    <i class="bi bi-phone me-2"></i> Easypaisa / JazzCash
-                                    <small class="d-block text-muted fw-normal">Transfer to our Mobile Account.</small>
+                                <label class="form-check-label fw-bold d-block w-100" for="easypaisa">
+                                    <i class="bi bi-phone me-2"></i> Easypaisa
+                                    <div class="mt-2 p-2 bg-light rounded text-dark small fw-normal">
+                                        <strong>Account Title:</strong> Zohaib Abrar<br>
+                                        <strong>Account Number:</strong> 03145310786
+                                    </div>
                                 </label>
                             </div>
 
                             <div class="form-check border p-3 rounded-4 mb-3" style="cursor: pointer;">
                                 <input class="form-check-input ms-0 me-2" type="radio" name="payment" id="bank" value="Bank Transfer">
-                                <label class="form-check-label fw-bold d-block" for="bank">
+                                <label class="form-check-label fw-bold d-block w-100" for="bank">
                                     <i class="bi bi-bank me-2"></i> Bank Transfer
-                                    <small class="d-block text-muted fw-normal">Transfer to our Bank Account.</small>
+                                    <div class="mt-2 p-2 bg-light rounded text-dark small fw-normal">
+                                        <strong>Account Title:</strong> Zohaib Abrar<br>
+                                        <strong>Bank of Punjab:</strong> 5010246565500018<br>
+                                        <strong>Bank Al-Mukarmah:</strong> 01041420311714114118
+                                    </div>
                                 </label>
                             </div>
 

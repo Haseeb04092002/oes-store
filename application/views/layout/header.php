@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?> | Oxbridge Educational Services</title>
+<?php
+    $default_desc = "Oxbridge Educational Services offers premium education books, IT solutions, e-commerce services, courses for kids, and artificial intelligence training in Chakwal, Pakistan.";
+    $default_keys = "education books, IT solutions, e commerce, courses for kids, artificial intelligence, Oxbridge Educational Services, Chakwal academy, study materials";
+?>
+    <meta name="description" content="<?= isset($meta_desc) && !empty($meta_desc) ? htmlspecialchars($meta_desc) : $default_desc; ?>">
+    <meta name="keywords" content="<?= isset($meta_keys) && !empty($meta_keys) ? htmlspecialchars($meta_keys) : $default_keys; ?>">
     <link rel="icon" type="image/png" href="<?= base_url('assets/images/oes-logo.png'); ?>">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">

@@ -55,6 +55,8 @@ class Main extends CI_Controller
     public function index()
     {
         $data['title'] = "Home";
+        $data['meta_desc'] = "Welcome to Oxbridge Educational Services. Your hub for premium education books, courses for kids, artificial intelligence training, and IT solutions.";
+        $data['meta_keys'] = "education books services IT solutions e commerce, courses for kids, artificial intelligence, Oxbridge Educational Services, Chakwal";
         $data['products'] = $this->Product_model->get_active_products(8);
         // echo "<br>";
         // echo "<pre>";
@@ -67,6 +69,8 @@ class Main extends CI_Controller
     public function products()
     {
         $data['title'] = "Shop Books";
+        $data['meta_desc'] = "Browse our comprehensive catalog of education books, learning materials, and courses designed to empower students and kids with modern IT solutions.";
+        $data['meta_keys'] = "education books services IT solutions e commerce, courses for kids, artificial intelligence, buy books online, learning materials";
         $data['products'] = $this->Product_model->get_active_products();
         // Fetch wishlist IDs only if logged in
         if($this->session->userdata('cus_logged')) {
@@ -82,12 +86,16 @@ class Main extends CI_Controller
     public function about()
     {
         $data['title'] = "About Us";
+        $data['meta_desc'] = "Learn about Oxbridge Educational Services, our mission, and our dedicated Skills Academy focusing on vocational training, digital literacy, and professional workshops.";
+        $data['meta_keys'] = "about Oxbridge Educational Services, education books services IT solutions e commerce, courses for kids, artificial intelligence, Chakwal academy";
         $this->render('about', $data);
     }
 
     public function contact()
     {
         $data['title'] = "Contact Us";
+        $data['meta_desc'] = "Get in touch with Oxbridge Educational Services in Chakwal. Contact us for inquiries regarding our education books, IT solutions, and courses.";
+        $data['meta_keys'] = "contact Oxbridge Educational Services, education books services IT solutions e commerce, courses for kids, artificial intelligence, Chakwal location";
         $this->render('contact', $data);
     }
 
@@ -113,6 +121,12 @@ class Main extends CI_Controller
         }
 
         $data['title'] = $data['product']['title'] . " | Details";
+        
+        // Dynamic SEO based on product
+        $desc = strip_tags($data['product']['short_desc'] ?: $data['product']['long_desc']);
+        $data['meta_desc'] = (strlen($desc) > 160) ? substr($desc, 0, 157) . '...' : $desc;
+        $data['meta_keys'] = $data['product']['title'] . ", education books services IT solutions e commerce, courses for kids, artificial intelligence";
+
         $this->render('product_detail', $data);
     }
 
